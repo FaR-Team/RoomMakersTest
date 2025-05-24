@@ -10,7 +10,6 @@
     <script src="Build/RoomMakersTest.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -22,6 +21,80 @@
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
+      } else {
+
+        document.body.style.backgroundColor = "black";
+        document.body.style.backgroundImage = "url('Banner.png')";
+        document.body.style.backgroundSize = "cover"; 
+        document.body.style.backgroundPosition = "center center";
+        document.body.style.backgroundRepeat = "no-repeat";
+
+        document.body.style.position = "relative";
+        document.body.style.display = "flex";
+        document.body.style.flexDirection = "column";
+        document.body.style.justifyContent = "center";
+        document.body.style.alignItems = "center";
+        document.body.style.minHeight = "100vh";
+        document.body.style.margin = "0";
+        document.body.style.boxSizing = "border-box";
+        document.body.style.padding = "20px";
+        document.body.style.fontFamily = "Arial, sans-serif";
+
+        const canvas = document.querySelector("#unity-canvas");
+        const bodyNode = document.body;
+
+        const darkOverlay = document.createElement('div');
+        darkOverlay.style.position = "absolute";
+        darkOverlay.style.top = "0";
+        darkOverlay.style.left = "0";
+        darkOverlay.style.width = "100%";
+        darkOverlay.style.height = "100%";
+        darkOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+        darkOverlay.style.zIndex = "1";
+        
+        const gameTitle = document.createElement('h1');
+        gameTitle.style.color = "white";
+        gameTitle.style.fontSize = "3em";
+        gameTitle.style.marginBottom = "30px";
+        gameTitle.style.textShadow = "2px 2px 5px rgba(0,0,0,0.7)";
+        gameTitle.style.position = "relative";
+        gameTitle.style.zIndex = "2";
+
+        const gameAreaContainer = document.createElement('div');
+        gameAreaContainer.id = "game-area-container";
+        gameAreaContainer.style.display = "flex";
+        gameAreaContainer.style.alignItems = "center";
+        gameAreaContainer.style.gap = "100px";
+        gameAreaContainer.style.position = "relative";
+        gameAreaContainer.style.zIndex = "2";
+
+        const qrLeftWrapper = document.createElement('div');
+        qrLeftWrapper.style.textAlign = "center";
+        const qrLeftImg = document.createElement('img');
+        qrLeftImg.src = "QR_Connect.png";
+        qrLeftImg.style.width = "350px";
+        qrLeftImg.style.height = "350px";
+        qrLeftWrapper.appendChild(qrLeftImg);
+
+        const qrRightWrapper = document.createElement('div');
+        qrRightWrapper.style.display = "flex";
+        qrRightWrapper.style.flexDirection = "column";
+        qrRightWrapper.style.alignItems = "center";
+        qrRightWrapper.style.textAlign = "center";
+        const qrRightImg = document.createElement('img');
+        qrRightImg.src = "QR_Play.png";
+        qrRightImg.alt = "Download on Google Play QR Code";
+        qrRightImg.style.width = "350px";
+        qrRightImg.style.height = "350px";
+        qrRightWrapper.appendChild(qrRightImg);
+
+        bodyNode.insertBefore(darkOverlay, canvas);
+        bodyNode.insertBefore(gameTitle, canvas);
+        bodyNode.insertBefore(gameAreaContainer, canvas);
+
+        gameAreaContainer.appendChild(qrLeftWrapper);
+        gameAreaContainer.appendChild(canvas);
+        gameAreaContainer.appendChild(qrRightWrapper);
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
@@ -32,8 +105,6 @@
         companyName: "FaR-Team",
         productName: "Room Makers",
         productVersion: "1.0.56.3-TEST",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
     </script>
   </body>
